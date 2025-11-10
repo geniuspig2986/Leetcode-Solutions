@@ -1,0 +1,19 @@
+#include <unordered_map>
+class Solution {
+public:
+    int subarraySum(vector<int>& nums, int k) {
+        unordered_map<int,int> seenMap;
+        seenMap[0] = 1;
+        int runningSum = 0;
+        int total = 0;
+        for (int i : nums) {
+            runningSum += i;
+
+            if (seenMap.contains(runningSum - k)) {
+                total += seenMap[runningSum - k];
+            }
+            seenMap[runningSum]++;
+        }
+        return total;
+    }
+};
