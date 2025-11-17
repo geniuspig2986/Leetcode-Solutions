@@ -1,0 +1,22 @@
+#include <deque>
+
+class Solution {
+public:
+    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        deque<int> maxDeque;
+        vector<int> result(nums.size() - k + 1);
+        for(int i = 0; i < nums.size(); i++){
+            if(!maxDeque.empty() && maxDeque.front() < i - k + 1){
+                maxDeque.pop_front();
+            }
+            while (!maxDeque.empty() && nums[maxDeque.back()] < nums[i]) {
+                maxDeque.pop_back();
+            }
+            maxDeque.push_back(i);
+            if (i >= k - 1) {
+                result[i - k + 1] = nums[maxDeque.front()];
+            }
+        }
+        return result;
+    }
+};
