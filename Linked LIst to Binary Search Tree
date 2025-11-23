@@ -1,0 +1,27 @@
+class Solution {
+public:
+    TreeNode* sortedListToBST(ListNode* head) {
+        if (head == nullptr) return nullptr;
+        
+        return convertBST(head, nullptr);
+    }
+private:
+    TreeNode* convertBST(ListNode* head, ListNode* tail){
+        if (head == tail) return nullptr;
+        
+        ListNode* slow = head;
+        ListNode* fast = head;
+        
+        while (fast != tail && fast->next != tail) {
+            fast = fast->next->next;
+            slow = slow->next;
+        }
+        
+        TreeNode* node = new TreeNode(slow->val);
+        
+        node->left = convertBST(head, slow);
+        node->right = convertBST(slow->next, tail);
+        
+        return node;
+    }
+};
